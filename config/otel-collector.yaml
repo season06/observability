@@ -1,4 +1,16 @@
+# Document for otel-collector
+#   https://opentelemetry.io/docs/collector/configuration
+# For detailed configuration:
+#   Receiver:  https://github.com/open-telemetry/opentelemetry-collector/tree/main/receiver
+#   Processor: https://github.com/open-telemetry/opentelemetry-collector/tree/main/processor
+#   Exporter:  https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter
+# Extra component lists:
+#   Receiver:  https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver
+#   Processor: https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor
+
+
 receivers:
+  # Data sources: traces, metrics, logs
   otlp:
     protocols:
       grpc:
@@ -7,19 +19,38 @@ receivers:
           allowed_origins:
             - "http://*"
             - "https://*"
+  # # Data sources: logs
+  # fluentforward:
+  #   endpoint: 0.0.0.0:24224
+  # # Data sources: metrics
+  # prometheus:
+  #   config:
+  #     scrape_configs:
+  #       - job_name: otel-collector
+  #         scrape_interval: 5s
+  #         static_configs:
+  #           - targets: [localhost:8888]
 
 processors:
   batch:
+    timeout: 1s
+  memory_limiter:
+    check_interval: 1s
 
 exporters:
   otlp:
     endpoint: tempo:4317
     tls:
       insecure: true
+  logging:
+      loglevel: debug
 
 service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch]
-      exporters: [otlp]
+      processors: [batch, memory_limiter]
+      exporters: [otlp, logging]
+  telemetry:
+    logs:
+      level: debug
