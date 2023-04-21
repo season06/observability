@@ -36,6 +36,18 @@ processors:
     timeout: 1s
   memory_limiter:
     check_interval: 1s
+  tail_sampling:
+    decision_wait: 10s
+    num_traces: 100
+    expected_new_traces_per_sec: 10
+    policies:
+      [
+          {
+            name: policy-1,
+            type: status_code,
+            status_code: {status_codes: [ERROR, UNSET]}
+          },
+      ]
 
 exporters:
   otlp:
@@ -49,7 +61,7 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch, memory_limiter]
+      processors: [batch, memory_limiter, tail_sampling]
       exporters: [otlp, logging]
   telemetry:
     logs:
