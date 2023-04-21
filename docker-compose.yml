@@ -33,13 +33,13 @@ services:
   #   logging: *logging
 
   # Generate fake traces
-  k6-tracing:
-    image: ghcr.io/grafana/xk6-client-tracing:v0.0.2
-    environment:
-      - ENDPOINT=otel-collector:4317
-    restart: always
-    depends_on:
-      - otel-collector
+  # k6-tracing:
+  #   image: ghcr.io/grafana/xk6-client-tracing:v0.0.2
+  #   environment:
+  #     - ENDPOINT=otel-collector:4317
+  #   restart: always
+  #   depends_on:
+  #     - otel-collector
 
   # OTEL collector pipeline
   otel-collector:
@@ -48,6 +48,9 @@ services:
     command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
       - ./config/otel-collector.yaml:/etc/otel-collector.yaml
+    ports:
+      - "4317"          # OTLP over gRPC receiver
+      - "4318"     # OTLP over HTTP receiver
 
   # ********************
   # Telemetry Components
