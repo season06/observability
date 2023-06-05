@@ -8,6 +8,8 @@
 #   Receiver:  https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver
 #   Processor: https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor
 
+extensions:
+  health_check:
 
 receivers:
   # Data sources: traces, metrics, logs
@@ -34,19 +36,24 @@ receivers:
 processors:
   batch:
     timeout: 1s
-  memory_limiter:
-    check_interval: 1s
+    send_batch_size: 50
   tail_sampling:
-    decision_wait: 10s
-    num_traces: 100
-    expected_new_traces_per_sec: 10
+    # best practice: `decision_wait` * `traces_per_sec` = 2 * `num_traces`
+    decision_wait: 5s
+    num_traces: 1000
+    expected_new_traces_per_sec: 100
     policies:
-      [
-          {
-            name: policy-1,
-            type: status_code,
-            status_code: {status_codes: [ERROR, UNSET]}
-          },
+      [          
+        {
+          name: errors-policy,
+          type: status_code,
+          status_code: {status_codes: [ERROR]}
+        },
+        {
+          name: randomized-policy,
+          type: probabilistic,
+          probabilistic: {sampling_percentage: 25}
+        }
       ]
 
 exporters:
@@ -58,11 +65,12 @@ exporters:
       loglevel: debug
 
 service:
+  extensions: [health_check]
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch, memory_limiter, tail_sampling]
+      processors: [batch, tail_sampling]
       exporters: [otlp, logging]
-  telemetry:
-    logs:
-      level: debug
+  # telemetry:
+  #   logs:
+  #     level: debug
