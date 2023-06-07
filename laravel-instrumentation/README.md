@@ -190,14 +190,15 @@ GitHub Resource: [contrib-auto-laravel](https://github.com/opentelemetry-php/con
     ```shell
     php pickle.phar (?)
 
+    sudo pecl install channel://pecl.php.net/opentelemetry-1.0.0beta4
+
     sudo vim /etc/php.ini
-    # Add the extension to your php.ini file:
-    [opentelemetry]
+    # add in `php.ini`
     extension=opentelemetry.so
+
     # check
     php -i | grep opentelemetry
 
-    sudo pecl install channel://pecl.php.net/opentelemetry-1.0.0beta4
     composer require open-telemetry/opentelemetry-auto-laravel
     ```
 - composer.json
@@ -220,6 +221,19 @@ GitHub Resource: [contrib-auto-laravel](https://github.com/opentelemetry-php/con
     ```php
     ```
 
+## Install gRPC extension
+- runtime library
+    ```bash
+    sudo pecl install grpc
+
+    # add in `php.ini`
+    extension=grpc.so
+    ```
+- composer install
+    ```bash
+    composer require grpc/grpc
+    composer require open-telemetry/transport-grpc
+    ```
 ## Other
 - Get current Trace and build child span
     ```php
