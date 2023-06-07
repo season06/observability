@@ -98,8 +98,9 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
       - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor
+      - GF_SERVER_HTTP_PORT=3001
     ports:
-      - "3000:3000"
+      - "3001:3001"
     depends_on:
       - loki
       - tempo
