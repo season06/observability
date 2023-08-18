@@ -1,0 +1,5 @@
+compactor:
+  enabled: false
+ingester:
+  persistence:
+    enabled: false
