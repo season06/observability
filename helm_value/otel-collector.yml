@@ -1,10 +1,12 @@
 mode: daemonset
+
 presets:
   logsCollection:
     enabled: true
     includeCollectorLogs: true
   kubernetesAttributes:
     enabled: true
+
 config:
   receivers:
     jaeger: null
@@ -23,6 +25,7 @@ config:
     #         static_configs:
     #           - targets:
     #               - ${env:MY_POD_IP}:8888
+
   processors:
     batch:
       timeout: 1s
@@ -46,24 +49,26 @@ config:
             probabilistic: {sampling_percentage: 25}
           }
         ]
+
   exporters:
     otlp:
       endpoint: tempo.o11y.svc.cluster.local:4317
       tls:
         insecure: true
-    # logging: {}
+    debug: {}
+
   service:
     pipelines:
       traces:
         receivers:
           - otlp
         processors:
-          - batch
           - memory_limiter
-          - tail_sampling
+          - batch
+          # - tail_sampling
         exporters:
           - otlp
-          - logging
+          - debug
 
 tolerations:
 - key: node-role.kubernetes.io/control-plane
