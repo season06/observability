@@ -1,9 +1,6 @@
 mode: daemonset
 
 presets:
-  logsCollection:
-    enabled: true
-    includeCollectorLogs: true
   kubernetesAttributes:
     enabled: true
 
