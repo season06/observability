@@ -1,0 +1,65 @@
+Running 1s test @ http://10.4.2.234:8000/api/reservation
+  1 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   678.22ms  280.63ms 991.55ms   50.00%
+    Req/Sec     4.25      1.50     5.00     75.00%
+  Latency Distribution
+     50%  792.14ms
+     75%  991.55ms
+     90%  991.55ms
+     99%  991.55ms
+  4 requests in 1.00s, 5.11KB read
+  Socket errors: connect 0, read 4, write 0, timeout 0
+Requests/sec:      3.99
+Transfer/sec:      5.09KB
+
+
+Running 10s test @ http://10.4.2.234:8000/api/reservation
+  1 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.75s   367.93ms   2.00s    88.00%
+    Req/Sec     5.54      1.85    10.00     82.69%
+  Latency Distribution
+     50%    1.91s 
+     75%    1.93s 
+     90%    1.96s 
+     99%    2.00s 
+  52 requests in 10.01s, 19.51MB read
+  Socket errors: connect 0, read 52, write 0, timeout 2
+  Non-2xx or 3xx responses: 22
+Requests/sec:      5.19
+Transfer/sec:      1.95MB
+
+
+Running 3s test @ http://10.4.2.234:8000/api/reservation
+  1 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.11s   518.93ms   1.86s    50.00%
+    Req/Sec     4.46      0.97     5.00     84.62%
+  Latency Distribution
+     50%    1.17s 
+     75%    1.66s 
+     90%    1.86s 
+     99%    1.86s 
+  13 requests in 3.01s, 16.61KB read
+  Socket errors: connect 0, read 13, write 0, timeout 5
+Requests/sec:      4.32
+Transfer/sec:      5.52KB
+
+
+Running 5s test @ http://10.4.2.234:8000/api/reservation
+  1 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     1.13s   553.69ms   1.95s    55.56%
+    Req/Sec     4.55      0.91     5.00     81.82%
+  Latency Distribution
+     50%    1.11s 
+     75%    1.56s 
+     90%    1.95s 
+     99%    1.95s 
+  22 requests in 5.01s, 28.10KB read
+  Socket errors: connect 0, read 22, write 0, timeout 13
+Requests/sec:      4.39
+Transfer/sec:      5.61KB
+
+

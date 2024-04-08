@@ -1,0 +1,16 @@
+Running 1s test @ http://10.4.2.234:8000/api/reservation
+  1 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   598.36ms  225.63ms 854.72ms   50.00%
+    Req/Sec     5.50      3.32    10.00     50.00%
+  Latency Distribution
+     50%  688.45ms
+     75%  854.72ms
+     90%  854.72ms
+     99%  854.72ms
+  4 requests in 1.00s, 6.18KB read
+  Socket errors: connect 0, read 4, write 0, timeout 0
+Requests/sec:      3.99
+Transfer/sec:      6.16KB
+
+
