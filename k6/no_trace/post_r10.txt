@@ -1,56 +1,35 @@
 
-          /\      |‾‾| /‾‾/   /‾‾/   
-     /\  /  \     |  |/  /   /  /    
-    /  \/    \    |     (   /   ‾‾\  
-   /          \   |  |\  \ |  (‾)  | 
+          /\      |‾‾| /‾‾/   /‾‾/
+     /\  /  \     |  |/  /   /  /
+    /  \/    \    |     (   /   ‾‾\
+   /          \   |  |\  \ |  (‾)  |
   / __________ \  |__| \__\ \_____/ .io
 
      execution: local
         script: post_10.js
         output: -
 
-     scenarios: (100.00%) 1 scenario, 5 max VUs, 1m30s max duration (incl. graceful stop):
-              * default: 30 iterations shared among 5 VUs (maxDuration: 1m0s, gracefulStop: 30s)
+     scenarios: (100.00%) 1 scenario, 5 max VUs, 40s max duration (incl. graceful stop):
+              * default: 5 looping VUs for 10s (gracefulStop: 30s)
 
 
-running (0m01.0s), 5/5 VUs, 0 complete and 0 interrupted iterations
-default   [   0% ] 5 VUs  0m01.0s/1m0s  00/30 shared iters
-
-running (0m02.0s), 5/5 VUs, 5 complete and 0 interrupted iterations
-default   [  17% ] 5 VUs  0m02.0s/1m0s  05/30 shared iters
-
-running (0m03.0s), 5/5 VUs, 10 complete and 0 interrupted iterations
-default   [  33% ] 5 VUs  0m03.0s/1m0s  10/30 shared iters
-
-running (0m04.0s), 5/5 VUs, 14 complete and 0 interrupted iterations
-default   [  47% ] 5 VUs  0m04.0s/1m0s  14/30 shared iters
-
-running (0m05.0s), 5/5 VUs, 18 complete and 0 interrupted iterations
-default   [  60% ] 5 VUs  0m05.0s/1m0s  18/30 shared iters
-
-running (0m06.0s), 5/5 VUs, 22 complete and 0 interrupted iterations
-default   [  73% ] 5 VUs  0m06.0s/1m0s  22/30 shared iters
-
-running (0m07.0s), 3/5 VUs, 27 complete and 0 interrupted iterations
-default   [  90% ] 5 VUs  0m07.0s/1m0s  27/30 shared iters
-
-     data_received..................: 39 kB 5.4 kB/s
-     data_sent......................: 34 kB 4.7 kB/s
-     http_req_blocked...............: avg=441.13µs min=340.28µs med=438.83µs max=581.7µs  p(90)=497.86µs p(95)=530.67µs
-     http_req_connecting............: avg=367.39µs min=272.06µs med=370.74µs max=494.21µs p(90)=424.23µs p(95)=453.65µs
-     http_req_duration..............: avg=133.1ms  min=78.96ms  med=88.7ms   max=320.85ms p(90)=266.33ms p(95)=292.84ms
-       { expected_response:true }...: avg=133.1ms  min=78.96ms  med=88.7ms   max=320.85ms p(90)=266.33ms p(95)=292.84ms
-     http_req_failed................: 0.00% ✓ 0        ✗ 30 
-     http_req_receiving.............: avg=623.63µs min=432.23µs med=590.07µs max=1.12ms   p(90)=723.52µs p(95)=770.68µs
-     http_req_sending...............: avg=54.22µs  min=35.8µs   med=52.04µs  max=83.08µs  p(90)=70.88µs  p(95)=77.21µs 
-     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s       max=0s       p(90)=0s       p(95)=0s      
-     http_req_waiting...............: avg=132.42ms min=78.33ms  med=88.07ms  max=320.09ms p(90)=265.69ms p(95)=292.1ms 
-     http_reqs......................: 30    4.109915/s
-     iteration_duration.............: avg=1.17s    min=1.07s    med=1.09s    max=1.64s    p(90)=1.41s    p(95)=1.52s   
-     iterations.....................: 30    4.109915/s
-     vus............................: 3     min=3      max=5
+     data_received..................: 60 kB 5.5 kB/s
+     data_sent......................: 52 kB 4.7 kB/s
+     http_req_blocked...............: avg=427.2µs  min=343.82µs med=423.78µs max=601.87µs p(90)=498.81µs p(95)=535.34µs
+     http_req_connecting............: avg=349.45µs min=264.25µs med=343.71µs max=527.51µs p(90)=421.6µs  p(95)=451.76µs
+     http_req_duration..............: avg=98.6ms   min=76.5ms   med=81.07ms  max=242.1ms  p(90)=168.6ms  p(95)=207.99ms
+       { expected_response:true }...: avg=98.6ms   min=76.5ms   med=81.07ms  max=242.1ms  p(90)=168.6ms  p(95)=207.99ms
+     http_req_failed................: 0.00% ✓ 0        ✗ 46
+     http_req_receiving.............: avg=642.72µs min=516.46µs med=622.99µs max=907.33µs p(90)=745.23µs p(95)=775.69µs
+     http_req_sending...............: avg=54.67µs  min=39.55µs  med=51.85µs  max=120.39µs p(90)=68.63µs  p(95)=71.32µs
+     http_req_tls_handshaking.......: avg=0s       min=0s       med=0s       max=0s       p(90)=0s       p(95)=0s
+     http_req_waiting...............: avg=97.91ms  min=75.83ms  med=80.38ms  max=241.29ms p(90)=167.87ms p(95)=207.4ms
+     http_reqs......................: 46    4.174306/s
+     iteration_duration.............: avg=1.12s    min=1.07s    med=1.08s    max=1.57s    p(90)=1.2s     p(95)=1.39s
+     iterations.....................: 46    4.174306/s
+     vus............................: 1     min=1      max=5
      vus_max........................: 5     min=5      max=5
 
 
-running (0m07.3s), 0/5 VUs, 30 complete and 0 interrupted iterations
-default ✓ [ 100% ] 5 VUs  0m07.3s/1m0s  30/30 shared iters
+running (11.0s), 0/5 VUs, 46 complete and 0 interrupted iterations
+default ✓ [======================================] 5 VUs  10s
