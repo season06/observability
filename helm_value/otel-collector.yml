@@ -5,6 +5,19 @@ presets:
     enabled: true
 
 ports:
+  otlp:
+    enabled: true
+    containerPort: 4317
+    servicePort: 4317
+    hostPort: 0
+    protocol: TCP
+    appProtocol: grpc
+  otlp-http:
+    enabled: true
+    containerPort: 4318
+    servicePort: 4318
+    hostPort: 0
+    protocol: TCP
   jaeger-compact:
     enabled: false
   jaeger-thrift:
@@ -13,7 +26,7 @@ ports:
     enabled: false
   zipkin:
     enabled: false
-
+    
 securityContext:
   allowPrivilegeEscalation: false
   capabilities:
@@ -22,6 +35,20 @@ securityContext:
   runAsNonRoot: true
   seccompProfile:
     type: RuntimeDefault
+
+service:
+  enabled: true
+  type: ClusterIP
+  internalTrafficPolicy: Local
+
+tolerations:
+- key: node-role.kubernetes.io/control-plane
+  effect: NoSchedule
+
+# resources:
+#   limits:
+#     cpu: 100m
+#     memory: 200M
 
 config:
   receivers:
@@ -46,29 +73,14 @@ config:
     batch:
       timeout: 1s
       send_batch_size: 50
-    memory_limiter: null   # If set to null, will be overridden with values based on k8s resource limits
-    tail_sampling:
-      # best practice: `decision_wait` * `traces_per_sec` = 2 * `num_traces`
-      decision_wait: 5s
-      num_traces: 1000
-      expected_new_traces_per_sec: 100
-      policies:
-        [          
-          {
-            name: errors-policy,
-            type: status_code,
-            status_code: {status_codes: [ERROR]}
-          },
-          {
-            name: randomized-policy,
-            type: probabilistic,
-            probabilistic: {sampling_percentage: 25}
-          }
-        ]
+    memory_limiter:   # If set to null, will be overridden with values based on k8s resource limits
+      check_interval: 1s
+      limit_mib: 4000
+      spike_limit_mib: 800
 
   exporters:
     otlp:
-      endpoint: tempo.o11y.svc.cluster.local:4317
+      endpoint: tempo-distributor.o11y.svc.cluster.local:4317
       tls:
         insecure: true
     debug: {}
@@ -81,11 +93,6 @@ config:
         processors:
           - memory_limiter
           - batch
-          # - tail_sampling
         exporters:
           - otlp
           - debug
-
-tolerations:
-- key: node-role.kubernetes.io/control-plane
-  effect: NoSchedule

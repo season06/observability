@@ -1,5 +1,44 @@
-compactor:
-  enabled: false
+traces:
+  otlp:
+    http:
+      enabled: true
+    grpc:
+      enabled: true
+
 ingester:
   persistence:
-    enabled: false
+    enabled: true
+  config:
+    flush_check_period: 10s
+    trace_idle_period: 10s
+    complete_block_timeout: 120h
+
+# metricsGenerator:
+#   enabled: true
+#   config:
+#     storage:
+#       remote_write:
+#         - send_exemplars: true
+#           url: http://prometheus-stack-prometheus.prometheus:9090/api/v1/write
+      
+storage:
+  trace:
+    backend: s3
+    s3:
+      access_key: 'grafana-tempo'
+      secret_key: 'supersecret'
+      bucket: 'tempo-traces'
+      endpoint: 'tempo-minio:9000'
+      insecure: true
+
+#MinIO storage configuration
+minio:
+  enabled: true
+  mode: standalone
+  rootUser: grafana-tempo
+  rootPassword: supersecret
+  buckets:
+    # Default Tempo storage bucket
+    - name: tempo-traces
+      policy: none
+      purge: false

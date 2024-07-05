@@ -1,0 +1,11 @@
+tempo:
+  traces:
+    otlp:
+      http: true
+      grpc: true
+
+compactor:
+  enabled: false
+ingester:
+  persistence:
+    enabled: false
